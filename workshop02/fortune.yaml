@@ -28,3 +28,22 @@ spec:
               ports:
               - name: app-port
                 containerPort: 3000
+
+---
+kind: Service
+apiVersion: v1
+
+metadata:
+   name: mydb-svc
+   namespace: myns
+   labels:
+      app: mydb-svc
+      version: v1
+
+spec:
+   type: ClusterIP
+   selector:
+      app: mydb-pod
+   ports:
+   - port: 3306
+     targetPort: mysql

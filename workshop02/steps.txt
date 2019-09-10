@@ -1,0 +1,14 @@
+to deploy db service
+-kubectl apply -f mydb.yaml --record
+
+to deploy app v1
+-kubectl apply -f myapp.yaml --record
+
+to deploy app v2
+-kubectl apply -f myapp.yaml --record
+
+to get deploy history
+-kubectl rollout status deploy/myapp-deploy -n myns
+
+to rollback to version 1
+-kubectl rollout undo deploy/myapp-deploy -n myns --to-revision=1

@@ -33,7 +33,7 @@ metadata:
         app: myapp-deploy
 
 spec:
-    replicas: 4
+    replicas: 2
     selector:
         matchLabels:
             app: myapp-pod
@@ -48,6 +48,11 @@ spec:
             - name: myapp
               image: stackupiss/northwind-app:v1
               imagePullPolicy: Always
+              resources:
+                requests:
+                    cpu: 100m
+                limits:
+                    cpu: 100m
               env:
               - name: DB_USER
                 value: root
@@ -80,7 +85,7 @@ metadata:
         app: myapp-svc
 
 spec:
-    type: LoadBalancer
+    type: ClusterIP
     selector:
         app: myapp-pod
     ports:

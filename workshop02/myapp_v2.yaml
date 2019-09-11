@@ -7,7 +7,6 @@ metadata:
     namespace: myns
     labels:
         app: myapp-deploy
-        version: v1
 
 spec:
     replicas: 4
@@ -16,31 +15,32 @@ spec:
             app: myapp-pod
     template:
         metadata:
+            name: myapp-pod
             labels:
                 app: myapp-pod
-                version: v1
+                version: v2
         spec:
             containers:
-                - name: myapp
-                  image: stackupiss/northwind-app:v2
-                  imagePullPolicy: Always
-                  env:
-                      - name: DB_USER
-                        value: root
-                      - name: DB_HOST
-                        valueFrom:
-                            configMapKeyRef:
-                                name: myapp-config
-                                key: db_host
-                      - name: DB_PASSWORD
-                        valueFrom:
-                            secretKeyRef:
-                                name: myapp-secret
-                                key: db_password
-                      - name: INSTANCE_IP_ADDRESS
-                        valueFrom:
-                            fieldRef:
-                                fieldPath: status.podIP
-                  ports:
-                      - name: myapp-port
-                        containerPort: 3000
+            - name: myapp
+              image: stackupiss/northwind-app:v2
+              imagePullPolicy: Always
+              env:
+              - name: DB_USER
+                value: root
+              - name: DB_HOST
+                valueFrom:
+                    configMapKeyRef:
+                        name: myapp-config
+                        key: db_host
+              - name: DB_PASSWORD
+                valueFrom:
+                    secretKeyRef:
+                        name: myapp-secret
+                        key: db_password
+              - name: INSTANCE_IP_ADDRESS
+                valueFrom:
+                    fieldRef:
+                        fieldPath: status.podIP
+              ports:
+              - name: myapp-port
+                containerPort: 3000

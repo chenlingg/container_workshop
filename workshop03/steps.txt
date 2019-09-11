@@ -1,0 +1,42 @@
+-create service account for tiller
+kubectl apply -f tiller-sa.yaml
+
+-install tiller to cluster with service account's name
+helm init --service-account tiller
+
+-create pvc
+kubectl apply -f mysql-pvc.yaml
+
+-create db
+kubectl apply -f mydb.yaml 
+
+- install nginx-ingress
+--Create namespace
+kubectl create ns nginx-ingress
+--Install nginx using helm
+helm install stable/nginx-ingress --name my-ingress --namespace nginx-ingress
+
+-deploy application
+kubectl apply -f myapp.yaml
+
+- proxy
+kubectl port-forward svc/myapp-svc -n myns 8080:80
+
+- deploy myapp-ing
+kubectl apply -f my-ing.yaml
+
+- check
+kubectl describe ing/myapp-ing -n myns
+
+- define host
+kubectl apply -f my-ing-host.yaml
+
+- with resource request
+kubectl apply -f myapp.yaml
+
+- horizontalautoscaler
+kubectl apply -f myapp-hps.yaml
+
+- check
+kubectl get po,svc,deploy,ing,hpa -n myns
+
